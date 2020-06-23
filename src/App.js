@@ -16,7 +16,7 @@ function App() {
             <MainSort/>
           </Col>
           <Col md='auto'>
-            <MainSearch/>
+            <MainSearch />
           </Col>
         </Row>
       </Container>
