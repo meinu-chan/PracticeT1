@@ -1,4 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
+
+import Table from 'react-bootstrap/Table'
+
 import axios from 'axios';
 
 const DEFAULT_COUNTRIES = [];
@@ -34,24 +37,13 @@ export default class SortPLS extends React.Component {
     const { countries } = this.state;
 
     const countriesList = countries.map((country,id) => {
-      const currenciesList = country.currencies.map(currency => {
-        return (
-          <p key={currency.name}>
-            <span>{currency.name}</span>
-            <span>{currency.symbol}</span>
-          </p>  
-        );
-      });
-      const langList = country.languages.map(language => language.name);
-      
       return (
         <tr className="tableRow" key={id}>
           <td>{country.name}</td>
-          <td>{currenciesList}</td>
+          <td>{country.capital}</td>
           <td>{country.region}</td>
-          <td><img src={country.flag} alt={country.denonym} /></td>
+          <td>{country.area}</td>
           <td>{country.population}</td>
-          <td>{langList}</td>
          </tr>   
       );  
     });
@@ -61,27 +53,20 @@ export default class SortPLS extends React.Component {
 
   render() {
     return (
-      <div className="table">
-        <table>
+        <Table>
           <thead>
             <tr>
               <th>Country name</th>
-              <th>Currencies</th>
+              <th>Capital</th>
               <th>Region</th>
-              <th>Flag</th>
-              <th
-                onClick={this.sortByField('population')}
-              >
-                Population
-              </th>
-              <th>Languages</th>
+              <th>Area</th>
+              <th>Population</th>
             </tr>
           </thead>
           <tbody>
             { this.renderTableBody() }
           </tbody>
-        </table>
-      </div>
+        </Table>
     );
   }
 }
