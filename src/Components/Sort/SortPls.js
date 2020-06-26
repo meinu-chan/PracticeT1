@@ -1,9 +1,11 @@
 import React from 'react';
 
 import Table from 'react-bootstrap/Table';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 import axios from 'axios';
-import Dropdown from 'react-bootstrap/Dropdown'
+import _ from 'lodash';
+
 
 const DEFAULT_COUNTRIES = [];
 
@@ -25,7 +27,6 @@ export default class SortPLS extends React.Component {
       this.setState((state) => {
         return { countries };
       });
-      //this.state = {co}
     })
     .catch(error => {
       console.log("error", error);
@@ -34,9 +35,8 @@ export default class SortPLS extends React.Component {
   
   sortByField = (field) => {
     console.log('field', field, this.state)
-    const countries = this.state.countries.sort((a,b) => {
-      return a[field] - b[field];
-    });
+    const { countries: currentCountries } = this.state;
+    const countries = _.sortBy(currentCountries, field);;
     
     this.setState({ countries });
   };
@@ -63,7 +63,7 @@ export default class SortPLS extends React.Component {
   render() {
     return (
      <div>
-      <Dropdown>
+      <Dropdown style={{marginBottom: '1rem'}}>
         <Dropdown.Toggle variant="success" id="dropdown-basic" color='green'>
           Sort By
         </Dropdown.Toggle>

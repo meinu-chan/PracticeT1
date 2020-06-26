@@ -6,8 +6,6 @@ import Col from 'react-bootstrap/Col'
 
 import MainSort from './Components/Sort/MainSort';
 import MainSearch from './Components/Search/MainSearch'
-import SortPls from './Components/Sort/SortPls'
-
 function App() {
   return (
     <div className="App">
@@ -21,7 +19,6 @@ function App() {
           </Col>
         </Row>
       </Container>
-      <SortPls />
     </div>
   );
 }
