@@ -6,7 +6,7 @@ import SortPls from './SortPls'
 
 
 function SortLabel(){
-    const sort= new SortPls();
+    var sort= new SortPls();
     return(
         <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-basic" color='green'>
