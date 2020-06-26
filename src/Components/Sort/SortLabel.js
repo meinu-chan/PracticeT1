@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 
 import Dropdown from 'react-bootstrap/Dropdown'
 
+
 function Sorting(){
     return(
         <Dropdown>
@@ -10,9 +11,9 @@ function Sorting(){
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-                    <Dropdown.Item href="#/">Name</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">Area</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Population</Dropdown.Item>
+                    <Dropdown.Item >Name</Dropdown.Item>
+                    <Dropdown.Item >Area</Dropdown.Item>
+                    <Dropdown.Item >Population</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
     )
