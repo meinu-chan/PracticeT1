@@ -8,7 +8,8 @@ import SortPls from './SortPls'
 function SortLabel(){
     var sort= new SortPls();
     return(
-        <Dropdown>
+        <div></div>
+       /*  <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-basic" color='green'>
                 Sort By
             </Dropdown.Toggle>
@@ -18,7 +19,7 @@ function SortLabel(){
                     <Dropdown.Item onClick={()=>sort.sortByField('area')}>Area</Dropdown.Item>
                     <Dropdown.Item onClick={()=>sort.sortByField('population')}>Population</Dropdown.Item>
             </Dropdown.Menu>
-        </Dropdown>
+        </Dropdown> */
     )
 }
 

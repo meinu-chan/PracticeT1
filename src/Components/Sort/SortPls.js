@@ -3,7 +3,7 @@ import React from 'react';
 import Table from 'react-bootstrap/Table';
 
 import axios from 'axios';
-import _ from 'lodash';
+import Dropdown from 'react-bootstrap/Dropdown'
 
 const DEFAULT_COUNTRIES = [];
 
@@ -20,16 +20,23 @@ export default class SortPLS extends React.Component {
     axios.get('https://restcountries.eu/rest/v2/all')
     .then(response => {
       const { data: countries } = response;
-      this.setState({ countries });
+      console.log('response', countries);
+
+      this.setState((state) => {
+        return { countries };
+      });
+      //this.state = {co}
     })
     .catch(error => {
-      console.log("error", error)
+      console.log("error", error);
     });
   };
   
-  sortByField = (field) => () => {
-  	const { countries: currentCountries } = this.state;
-    const countries = _.sortBy(currentCountries, field);
+  sortByField = (field) => {
+    console.log('field', field, this.state)
+    const countries = this.state.countries.sort((a,b) => {
+      return a[field] - b[field];
+    });
     
     this.setState({ countries });
   };
@@ -39,7 +46,8 @@ export default class SortPLS extends React.Component {
 
     const countriesList = countries.map((country,id) => {
       return (
-        <tr key={id}>
+        
+        <tr className="tableRow" key={id}>
           <td>{country.name}</td>
           <td>{country.capital}</td>
           <td>{country.region}</td>
@@ -54,7 +62,19 @@ export default class SortPLS extends React.Component {
 
   render() {
     return (
-        <Table>
+     <div>
+      <Dropdown>
+        <Dropdown.Toggle variant="success" id="dropdown-basic" color='green'>
+          Sort By
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+          <Dropdown.Item onClick={()=>this.sortByField('name')}>Name</Dropdown.Item>
+          <Dropdown.Item onClick={()=>this.sortByField('area')}>Area</Dropdown.Item>
+          <Dropdown.Item onClick={()=>this.sortByField('population')}>Population</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+      <Table>
           <thead>
             <tr>
               <th>Country name</th>
@@ -68,6 +88,7 @@ export default class SortPLS extends React.Component {
             { this.renderTableBody() }
           </tbody>
         </Table>
+     </div>
     );
   }
 }
