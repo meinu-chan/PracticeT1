@@ -1,5 +1,7 @@
 import React from 'react';
 
+// import SearchPls from '../SerchPls'
+
 import Table from 'react-bootstrap/Table';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Container from 'react-bootstrap/Container';
@@ -15,12 +17,15 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import axios from 'axios';
 import _ from 'lodash';
 
-
+const API_NAME = 'https://restcountries.eu/rest/v2/name/';
+const API_ALL = 'https://restcountries.eu/rest/v2/all';
 const DEFAULT_COUNTRIES = [];
+const value = '';
 
 export default class SortPLS extends React.Component {  
   state = {
     countries: DEFAULT_COUNTRIES,
+    value : value,
   };
 
   componentDidMount() {
@@ -28,7 +33,7 @@ export default class SortPLS extends React.Component {
   }
   
   loadCountries = () => {
-    axios.get('https://restcountries.eu/rest/v2/all')
+    axios.get(API_ALL)
     .then(response => {
       const { data: countries } = response;
       console.log('response', countries);
@@ -49,7 +54,28 @@ export default class SortPLS extends React.Component {
     
     this.setState({ countries });
   };
-  
+
+  searchByName = (e) => {
+    let text = this.state;
+    text.value = e.target.value;
+    this.setState(text);
+    //axios.get(API_NAME + text)
+  }
+
+  buttonClick = () =>{
+    axios.get(API_NAME + this.state.value)
+    .then(response => {
+      const { data: countries } = response;
+      console.log('response', countries);
+
+      this.setState((state) => {
+        return { countries };
+      });
+    })
+    .catch(error => {
+      console.log("error", error);
+    });
+  }
 
   renderTableBody() {
     const { countries } = this.state;
@@ -94,15 +120,17 @@ export default class SortPLS extends React.Component {
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                   <NavDropdown title="Search By" id="basic-nav-dropdown">
-                    <NavDropdown.Item href="#action/3.1">Name</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.2">Full Name</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3">Capital</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.4">Region</NavDropdown.Item>
+                    <NavDropdown.Item >Name</NavDropdown.Item>
+                    <NavDropdown.Item >Full Name</NavDropdown.Item>
+                    <NavDropdown.Item >Capital</NavDropdown.Item>
+                    <NavDropdown.Item >Region</NavDropdown.Item>
                   </NavDropdown>
                 </Nav>
-                <Form inline>
-                  <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                  <Button variant="outline-success">Search</Button>
+                <Form inline >
+                  <FormControl type="text" placeholder="Search" className="mr-sm-2" ref={ref => this.input = ref}
+                    onChange={this.searchByName}
+                    value={this.state.value} />
+                  <Button variant="outline-success" onClick={this.buttonClick} >Search</Button>
                 </Form>
               </Navbar.Collapse>
             </Navbar>
@@ -127,4 +155,3 @@ export default class SortPLS extends React.Component {
     );
   }
 }
-
