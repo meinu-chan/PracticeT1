@@ -24,7 +24,7 @@ const API = ['https://restcountries.eu/rest/v2/all','https://restcountries.eu/re
 // const API_FULLNAME2 = '?fullText=true'
 const DEFAULT_COUNTRIES = [];
 const value = '';
-const key = 1;
+const key = '1';
 
 export default class SortPLS extends React.Component {  
   state = {
@@ -80,6 +80,12 @@ export default class SortPLS extends React.Component {
 
     if(this.state.value === ''){
       this.loadCountries();
+      return;
+    }
+
+    if(this.state.key === '2'){
+      this.inserter(API[this.state.key]);
+      return;
     }
 
     console.log(API[this.state.key] + this.state.value)
@@ -99,7 +105,19 @@ export default class SortPLS extends React.Component {
   }
 
   inserter = (list) =>{
+    console.log(list[0] + this.state.value + list[1])
+    axios.get(list[0] + this.state.value + list[1])
+    .then(response => {
+      const { data: countries } = response;
+      console.log('response', countries);
 
+      this.setState((state) => {
+        return { countries };
+      });
+    })
+    .catch(error => {
+      console.log("error", error);
+    }); 
   }
 
   renderTableBody() {
